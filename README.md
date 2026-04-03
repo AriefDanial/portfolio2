@@ -2,7 +2,7 @@
 
 A modern, interactive personal portfolio built with vanilla HTML, CSS, and JavaScript. Features a custom command palette, multi-theme support (including a 🦖 Jurassic mode), smooth animations, and a fully responsive design.
 
-🔗 **Live Demo:** (https://portfolio2-arief.vercel.app/#projects)
+🔗 **Live Demo:** (https://portfolio2-arief.vercel.app)
 
 ---
 
