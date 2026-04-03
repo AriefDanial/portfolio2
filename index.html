@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arief Danial — Software Engineer Intern</title>
+  <meta name="description" content="Portfolio of Arief Danial, a Software Engineering Intern with experience in Java, Spring Boot, PHP, MySQL, React, and Next.js." />
+  <meta property="og:title" content="Arief Danial — Software Engineer Intern" />
+  <meta property="og:description" content="Information Technology undergraduate and Software Engineering Intern. Building real-world applications with Java, Spring Boot, PHP, MySQL, and modern web technologies." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+  <!-- Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <span class="loader-logo">AD.</span>
+      <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+  </div>
+
+  <!-- Noise texture -->
+  <div class="noise-overlay" aria-hidden="true">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <filter id="noiseFilter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.80" numOctaves="3" stitchTiles="stitch"/>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+    </svg>
+  </div>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Command Palette -->
+  <div class="command-palette" id="commandPalette" aria-hidden="true">
+    <div class="palette-overlay" id="paletteOverlay"></div>
+    <div class="palette-panel">
+      <div class="palette-search">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="paletteInput" placeholder="Type a command or search..." autocomplete="off" />
+        <kbd class="palette-hint">ESC</kbd>
+      </div>
+      <div class="palette-list" id="paletteList"></div>
+    </div>
+  </div>
+
+  <!-- Keyboard hint -->
+  <div class="kbd-hint" id="kbdHint" aria-hidden="true">
+    <span>Press <kbd>/</kbd> for commands</span>
+  </div>
+
+  <!-- Theme indicator -->
+  <div class="theme-badge" id="themeBadge" aria-hidden="true">
+    <span class="theme-icon" id="themeIcon">☀️</span>
+    <span class="theme-name" id="themeName">Light</span>
+  </div>
+
+  <header class="header" id="header">
+    <div class="container nav-container">
+      <a href="#" class="logo" data-cursor-hover>AD.</a>
+      <nav class="nav" id="nav">
+        <a href="#about" data-cursor-hover>About</a>
+        <a href="#skills" data-cursor-hover>Skills</a>
+        <a href="#projects" data-cursor-hover>Projects</a>
+        <a href="#now" data-cursor-hover>Now</a>
+        <a href="#contact" data-cursor-hover>Contact</a>
+        <a href="#contact" class="btn btn-sm btn-primary" data-cursor-hover>Hire Me</a>
+        
+        <div class="theme-picker">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" data-cursor-hover>
+            <svg class="sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="leaf" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+            </svg>
+          </button>
+          <div class="theme-dropdown" id="themeDropdown">
+            <button class="theme-option" data-theme="light" data-cursor-hover>
+              <span>☀️</span> Light
+            </button>
+            <button class="theme-option" data-theme="dark" data-cursor-hover>
+              <span>🌙</span> Dark
+            </button>
+            <button class="theme-option" data-theme="jurassic" data-cursor-hover>
+              <span>🦖</span> Jurassic
+            </button>
+          </div>
+        </div>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="about">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="fern fern-1">🌿</div>
+        <div class="fern fern-2">🌿</div>
+        <div class="fern fern-3">🍃</div>
+        <div class="amber amber-1"></div>
+        <div class="amber amber-2"></div>
+        <div class="amber amber-3"></div>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-content" data-reveal>
+          <div class="hero-top-row">
+            <span class="eyebrow">Software Engineering</span>
+            <span class="status-badge" data-cursor-hover>
+              <span class="status-pulse"></span>
+              Open to opportunities
+            </span>
+          </div>
+          <h1>
+            <span class="greeting" id="greeting">Hello,</span>
+            <span class="name">I’m Arief Danial</span>
+          </h1>
+          <p class="hero-role">
+            <span id="typewriter"></span><span class="type-cursor">|</span>
+          </p>
+          <p class="hero-bio">
+            Information Technology undergraduate and <strong>Software Engineering Intern</strong> with hands-on experience in backend and web development using <strong>Java (Spring Boot)</strong>, <strong>PHP</strong>, <strong>MySQL</strong>, and <strong>RESTful APIs</strong>. Strong foundation in building real-world applications, database optimization, and system integration. Seeking junior software developer, backend engineer, or IT support roles.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary" data-cursor-hover data-magnetic>View Projects</a>
+            <a href="#contact" class="btn btn-secondary" data-cursor-hover data-magnetic>Contact Me</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat" data-counter data-target="2" data-suffix="+" data-label="Years experience">0</div>
+            <div class="stat" data-counter data-target="15" data-suffix="+" data-label="Projects built">0</div>
+            <div class="stat" data-counter data-target="100" data-suffix="%" data-label="Passion level">0</div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true" data-reveal>
+          <div class="orbit-scene" id="orbitScene">
+            <div class="orbit-ring ring-1"></div>
+            <div class="orbit-ring ring-2"></div>
+            <div class="orbit-ring ring-3"></div>
+            <div class="orbit-dot dot-1"></div>
+            <div class="orbit-dot dot-2"></div>
+            <div class="orbit-dot dot-3"></div>
+            <div class="orbit-center"><span>AD</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <div class="mouse"><div class="wheel"></div></div>
+      </div>
+    </section>
+
+    <!-- Languages -->
+    <section class="languages" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Linguistic Versatility</span>
+          <h2>Languages</h2>
+        </div>
+        <div class="lang-grid">
+          <div class="lang-card" data-cursor-hover>
+            <div class="lang-flag">🇬🇧</div>
+            <div class="lang-info">
+              <h3>English</h3>
+              <span>Professional</span>
+            </div>
+          </div>
+          <div class="lang-card" data-cursor-hover>
+            <div class="lang-flag">🇲🇾</div>
+            <div class="lang-info">
+              <h3>Malay</h3>
+              <span>Native</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="skills" id="skills">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <span class="section-tag">Technical Ecosystem</span>
+          <h2>Skills & Tools</h2>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-category" data-reveal data-tilt data-cursor-hover>
+            <div class="skill-icon">🌐</div>
+            <h3>Web & Frontend</h3>
+            <div class="skill-bars">
+              <div class="skill-bar" data-skill="React / Next.js" data-level="85"></div>
+              <div class="skill-bar" data-skill="TypeScript / JavaScript" data-level="80"></div>
+              <div class="skill-bar" data-skill="Tailwind CSS / HTML / CSS" data-level="90"></div>
+              <div class="skill-bar" data-skill="WordPress" data-level="75"></div>
+              <div class="skill-bar" data-skill="Responsive Web Design" data-level="82"></div>
+            </div>
+          </div>
+          <div class="skill-category" data-reveal data-tilt data-cursor-hover>
+            <div class="skill-icon">⚙️</div>
+            <h3>Backend & Systems</h3>
+            <div class="skill-bars">
+              <div class="skill-bar" data-skill="Java / Spring Boot" data-level="85"></div>
+              <div class="skill-bar" data-skill="PHP" data-level="80"></div>
+              <div class="skill-bar" data-skill="RESTful APIs" data-level="82"></div>
+              <div class="skill-bar" data-skill="Docker" data-level="65"></div>
+              <div class="skill-bar" data-skill="Git / GitHub" data-level="85"></div>
+            </div>
+          </div>
+          <div class="skill-category" data-reveal data-tilt data-cursor-hover>
+            <div class="skill-icon">🗄️</div>
+            <h3>Database & Tools</h3>
+            <div class="skill-tags">
+              <span>MySQL</span>
+              <span>SQLite</span>
+              <span>Android Studio</span>
+              <span>OOP</span>
+              <span>Database Design</span>
+              <span>System Optimization</span>
+              <span>API Integration</span>
+              <span>Problem Solving</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects" id="projects">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <span class="section-tag">Projects</span>
+          <h2>Selected Work</h2>
+        </div>
+        <div class="projects-grid">
+          <article class="project-card featured" data-reveal data-tilt data-cursor-hover>
+            <div class="project-glow"></div>
+            <div class="project-image">
+              <div class="project-visual">
+                <div class="browser-bar">
+                  <div class="dot red"></div>
+                  <div class="dot yellow"></div>
+                  <div class="dot green"></div>
+                </div>
+                <div class="project-body">
+                  <div class="project-title-line">TrackTen Attendance System</div>
+                  <div class="project-subline">Next.js 14 · React · TypeScript · Tailwind CSS</div>
+                  <div class="project-checks">
+                    <div class="check">App Router</div>
+                    <div class="check">TypeScript</div>
+                    <div class="check">Modern UI</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3>TrackTen Attendance System</h3>
+              <p>A modern web-based attendance management system using Next.js 14 with App Router architecture. Built interactive UI components including login forms, dashboards, and data tables using React and TypeScript.</p>
+              <div class="project-actions">
+                <a href="https://github.com/AriefDanial/TrackTen" target="_blank" rel="noopener noreferrer" class="project-link" data-cursor-hover>View on GitHub →</a>
+                <a href="https://track10.vercel.app/login" target="_blank" rel="noopener noreferrer" class="project-link secondary" data-cursor-hover>Live Demo →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-reveal data-tilt data-cursor-hover>
+            <div class="project-glow"></div>
+            <div class="project-image">
+              <div class="project-visual">
+                <div class="browser-bar">
+                  <div class="dot red"></div>
+                  <div class="dot yellow"></div>
+                  <div class="dot green"></div>
+                </div>
+                <div class="project-body">
+                  <div class="project-title-line">E-Commerce System</div>
+                  <div class="project-subline">Spring Boot · MySQL · Docker</div>
+                  <div class="project-checks">
+                    <div class="check">RESTful APIs</div>
+                    <div class="check">Docker</div>
+                    <div class="check">Backend</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3>E-Commerce System</h3>
+              <p>Developed RESTful APIs for product and user management using Spring Boot. Optimized database queries improving performance by 20%. Containerized the application using Docker for deployment.</p>
+              <div class="project-actions">
+                <a href="https://github.com/AriefDanial" target="_blank" rel="noopener noreferrer" class="project-link" data-cursor-hover>View on GitHub →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-reveal data-tilt data-cursor-hover>
+            <div class="project-glow"></div>
+            <div class="project-image">
+              <div class="project-visual">
+                <div class="browser-bar">
+                  <div class="dot red"></div>
+                  <div class="dot yellow"></div>
+                  <div class="dot green"></div>
+                </div>
+                <div class="project-body">
+                  <div class="project-title-line">CAT-HAVEN</div>
+                  <div class="project-subline">Cat Adoption & Rescue Platform</div>
+                  <div class="project-checks">
+                    <div class="check">Full-stack</div>
+                    <div class="check">PHP</div>
+                    <div class="check">MySQL</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3>CAT-HAVEN</h3>
+              <p>A full-stack cat adoption and rescue platform connecting adopters, rescuers, and shelters. Built with PHP, MySQL, HTML, CSS, and JavaScript. Implemented authentication, pet listing management, and admin functionalities.</p>
+              <div class="project-actions">
+                <a href="https://github.com/AriefDanial/CAT-HAVEN" target="_blank" rel="noopener noreferrer" class="project-link" data-cursor-hover>View on GitHub →</a>
+                <span class="project-status">Still ongoing</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-reveal data-tilt data-cursor-hover>
+            <div class="project-glow"></div>
+            <div class="project-image">
+              <div class="project-visual">
+                <div class="browser-bar">
+                  <div class="dot red"></div>
+                  <div class="dot yellow"></div>
+                  <div class="dot green"></div>
+                </div>
+                <div class="project-body">
+                  <div class="project-title-line">10 Creative Solutions Website</div>
+                  <div class="project-subline">WordPress · HTML · CSS · JavaScript</div>
+                  <div class="project-checks">
+                    <div class="check">Corporate</div>
+                    <div class="check">Responsive</div>
+                    <div class="check">CMS</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3>10 Creative Solutions Website</h3>
+              <p>Developed and maintained the company's official corporate website using WordPress. Customized website components with HTML, CSS, and JavaScript to enhance design and usability. Structured service pages aligned with company branding.</p>
+              <div class="project-actions">
+                <a href="https://github.com/AriefDanial" target="_blank" rel="noopener noreferrer" class="project-link" data-cursor-hover>View on GitHub →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-reveal data-tilt data-cursor-hover>
+            <div class="project-glow"></div>
+            <div class="project-image">
+              <div class="project-visual">
+                <div class="browser-bar">
+                  <div class="dot red"></div>
+                  <div class="dot yellow"></div>
+                  <div class="dot green"></div>
+                </div>
+                <div class="project-body">
+                  <div class="project-title-line">AI Chatbot</div>
+                  <div class="project-subline">API Integration · Automation Tools</div>
+                  <div class="project-checks">
+                    <div class="check">AI</div>
+                    <div class="check">APIs</div>
+                    <div class="check">Automation</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3>AI Chatbot</h3>
+              <p>Developed an AI-powered chatbot capable of answering user queries automatically. Integrated external APIs to provide real-time responses and information retrieval with conversational logic.</p>
+              <div class="project-actions">
+                <a href="https://github.com/AriefDanial/AI-1.0" target="_blank" rel="noopener noreferrer" class="project-link" data-cursor-hover>View on GitHub →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-reveal data-tilt data-cursor-hover>
+            <div class="project-glow"></div>
+            <div class="project-image">
+              <div class="project-visual">
+                <div class="browser-bar">
+                  <div class="dot red"></div>
+                  <div class="dot yellow"></div>
+                  <div class="dot green"></div>
+                </div>
+                <div class="project-body">
+                  <div class="project-title-line">Kids Learning Mobile App</div>
+                  <div class="project-subline">Java · Android Studio · SQLite</div>
+                  <div class="project-checks">
+                    <div class="check">Mobile</div>
+                    <div class="check">Android</div>
+                    <div class="check">SQLite</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3>Kids Learning Mobile App</h3>
+              <p>Built an interactive mobile application for children's learning using Java and Android Studio. Features engaging educational content with local data storage via SQLite.</p>
+              <div class="project-actions">
+                <a href="https://github.com/AriefDanial" target="_blank" rel="noopener noreferrer" class="project-link" data-cursor-hover>View on GitHub →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-reveal data-tilt data-cursor-hover>
+            <div class="project-glow"></div>
+            <div class="project-image">
+              <div class="project-visual">
+                <div class="browser-bar">
+                  <div class="dot red"></div>
+                  <div class="dot yellow"></div>
+                  <div class="dot green"></div>
+                </div>
+                <div class="project-body">
+                  <div class="project-title-line">ariefdanial.github.io</div>
+                  <div class="project-subline">Portfolio 2.0 · Dark / Light / Jurassic</div>
+                  <div class="project-checks">
+                    <div class="check">Responsive</div>
+                    <div class="check">Modern UI</div>
+                    <div class="check">Fast</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3>Portfolio 2.0</h3>
+              <p>My latest personal portfolio built with HTML, CSS, and JavaScript. Features dark mode, a command palette, typewriter effects, and smooth animations.</p>
+              <div class="project-actions">
+                <a href="https://github.com/AriefDanial/ariefdanial.github.io" target="_blank" rel="noopener noreferrer" class="project-link" data-cursor-hover>View on GitHub →</a>
+                <a href="https://ariefdanial-github-io.vercel.app" target="_blank" rel="noopener noreferrer" class="project-link secondary" data-cursor-hover>Live Demo →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card coming-soon" data-reveal data-cursor-hover>
+            <div class="project-content">
+              <div class="soon-badge">Explore more</div>
+              <h3>See all repositories</h3>
+              <p>Check out my GitHub for more experiments, learning projects, and open-source contributions.</p>
+              <div class="project-actions">
+                <a href="https://github.com/AriefDanial?tab=repositories" target="_blank" rel="noopener noreferrer" class="project-link" data-cursor-hover>View All Projects →</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="experience" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Education & Experience</span>
+          <h2>Journey</h2>
+        </div>
+        <div class="exp-timeline">
+          <div class="exp-item" data-reveal>
+            <div class="exp-marker"></div>
+            <div class="exp-content">
+              <h3>Software Engineering Intern — 10 Creative Solutions</h3>
+              <p class="exp-date">Sept 2025 – Feb 2026</p>
+              <ul class="exp-list">
+                <li>Developed and maintained the 10 Creative Solutions corporate website using WordPress, improving usability and modernizing the company's online presence.</li>
+                <li>Customized web components using HTML, CSS, and JavaScript to enhance visual design and functionality.</li>
+                <li>Assisted in building internal system modules such as the Perfect10 Asset Management System, supporting asset tracking and management processes.</li>
+                <li>Created and structured service pages, corporate profiles, and digital content to improve information accessibility.</li>
+                <li>Ensured responsive web design for optimal performance across desktop and mobile devices.</li>
+                <li>Utilized GitHub for version control and project collaboration with the development team.</li>
+                <li>Performed troubleshooting, system updates, and ongoing website maintenance.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="exp-item" data-reveal>
+            <div class="exp-marker"></div>
+            <div class="exp-content">
+              <h3>Part-Time Crew Member</h3>
+              <p class="exp-date">2023 – 2026</p>
+              <p>Worked across multiple F&B outlets including Tealive, Lavender, Burger King, and A&W. Managed POS systems, customer service, food preparation, and daily operations during peak hours.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Now -->
+    <section class="now" id="now" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Now</span>
+          <h2>Currently</h2>
+        </div>
+        <div class="now-grid">
+          <div class="now-card" data-reveal data-cursor-hover>
+            <div class="now-icon">📖</div>
+            <h3>Learning</h3>
+            <p>Advanced Next.js patterns, System Design basics, and TypeScript deep dives.</p>
+          </div>
+          <div class="now-card" data-reveal data-cursor-hover>
+            <div class="now-icon">🛠️</div>
+            <h3>Building</h3>
+            <p>A full-stack dashboard app with real-time data and modern UI components.</p>
+          </div>
+          <div class="now-card" data-reveal data-cursor-hover>
+            <div class="now-icon">✍️</div>
+            <h3>Sharing</h3>
+            <p>Documenting my journey on GitHub and writing about frontend engineering.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact-box" data-reveal>
+          <div class="contact-blobs">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+          </div>
+          <div class="contact-content">
+            <h2>Let’s build something together</h2>
+            <p>Open to internships, collaborations, and interesting conversations.</p>
+            <div class="contact-links">
+              <button class="contact-item" id="copyEmail" data-cursor-hover>
+                <span class="contact-icon">📧</span>
+                <span class="contact-label">Copy Email</span>
+                <span class="contact-arrow">→</span>
+              </button>
+              <a href="https://wa.me/60176250038" target="_blank" rel="noopener noreferrer" class="contact-item" data-cursor-hover>
+                <span class="contact-icon">📱</span>
+                <span class="contact-label">WhatsApp</span>
+                <span class="contact-arrow">→</span>
+              </a>
+              <a href="https://github.com/AriefDanial" target="_blank" rel="noopener noreferrer" class="contact-item" data-cursor-hover>
+                <span class="contact-icon">🐙</span>
+                <span class="contact-label">GitHub</span>
+                <span class="contact-arrow">→</span>
+              </a>
+              <a href="https://linkedin.com/in/ariefdanialismail" target="_blank" rel="noopener noreferrer" class="contact-item" data-cursor-hover>
+                <span class="contact-icon">💼</span>
+                <span class="contact-label">LinkedIn</span>
+                <span class="contact-arrow">→</span>
+              </a>
+              <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="contact-item" data-cursor-hover>
+                <span class="contact-icon">📄</span>
+                <span class="contact-label">Resume (PDF)</span>
+                <span class="contact-arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p>© <span id="year"></span> Arief Danial. Built with care.</p>
+        <p class="footer-quote">Learning in public.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top" data-cursor-hover>
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
