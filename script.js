@@ -4,9 +4,9 @@
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
   const lerp = (a, b, t) => a + (b - a) * t;
 
-  const themes = ['light', 'dark', 'jurassic'];
-  const themeIcons = { light: '☀️', dark: '🌙', jurassic: '🦖' };
-  const themeNames = { light: 'Light', dark: 'Dark', jurassic: 'Jurassic' };
+  const themes = ['light', 'dark'];
+  const themeIcons = { light: '☀️', dark: '🌙' };
+  const themeNames = { light: 'Light', dark: 'Dark' };
 
   /* ===== Page Loader ===== */
   const loader = $('#pageLoader');
@@ -28,15 +28,6 @@
   const applyTheme = (theme) => {
     root.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
-    if (themeIcon) themeIcon.textContent = themeIcons[theme];
-    if (themeName) themeName.textContent = themeNames[theme];
-    showThemeBadge();
-  };
-
-  const showThemeBadge = () => {
-    if (!themeBadge) return;
-    themeBadge.classList.add('visible');
-    setTimeout(() => themeBadge.classList.remove('visible'), 2000);
   };
 
   if (themeToggle && themePicker) {
@@ -92,6 +83,9 @@
       charIndex++;
       typeSpeed = 80;
     }
+
+    const codeRole = $('#codeRole');
+    if (codeRole) codeRole.textContent = `"${typewriterEl.textContent}"`;
 
     if (!isDeleting && charIndex === current.length) {
       isDeleting = true;
@@ -203,7 +197,6 @@
     { name: 'Toggle Theme (cycle)', action: () => cycleTheme(1), shortcut: 'T' },
     { name: 'Set Theme: Light', action: () => setTheme('light'), shortcut: '1' },
     { name: 'Set Theme: Dark', action: () => setTheme('dark'), shortcut: '2' },
-    { name: 'Set Theme: Jurassic', action: () => setTheme('jurassic'), shortcut: '3' },
     { name: 'Copy Email', action: () => copyEmail(), shortcut: 'E' },
     { name: 'Back to Top', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }), shortcut: '↑' },
   ];
@@ -315,9 +308,9 @@
       } else if (k === 'e') {
         e.preventDefault();
         copyEmail();
-      } else if (['1','2','3'].includes(e.key)) {
+      } else if (['1','2'].includes(e.key)) {
         e.preventDefault();
-        const map = {'1':'light','2':'dark','3':'jurassic'};
+        const map = {'1':'light','2':'dark'};
         setTheme(map[e.key]);
       }
     }
@@ -412,19 +405,6 @@
     });
     btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
   });
-
-  /* ===== Orbit parallax ===== */
-  const orbitScene = $('#orbitScene');
-  const heroVisual = $('.hero-visual');
-  if (orbitScene && heroVisual && window.matchMedia('(pointer: fine)').matches) {
-    heroVisual.addEventListener('mousemove', (e) => {
-      const rect = heroVisual.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      orbitScene.style.transform = `rotateY(${x * 16}deg) rotateX(${y * -16}deg)`;
-    });
-    heroVisual.addEventListener('mouseleave', () => { orbitScene.style.transform = ''; });
-  }
 
   /* ===== Copy email ===== */
   const copyEmailBtn = $('#copyEmail');

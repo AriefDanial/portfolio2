@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <script>
     (function() {
@@ -28,16 +28,6 @@
       <span class="loader-logo">AD.</span>
       <div class="loader-bar"><div class="loader-progress"></div></div>
     </div>
-  </div>
-
-  <!-- Noise texture -->
-  <div class="noise-overlay" aria-hidden="true">
-    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <filter id="noiseFilter">
-        <feTurbulence type="fractalNoise" baseFrequency="0.80" numOctaves="3" stitchTiles="stitch"/>
-      </filter>
-      <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
-    </svg>
   </div>
 
   <!-- Cursor -->
@@ -63,12 +53,6 @@
   <!-- Keyboard hint -->
   <div class="kbd-hint" id="kbdHint" aria-hidden="true">
     <span>Press <kbd>/</kbd> for commands</span>
-  </div>
-
-  <!-- Theme indicator -->
-  <div class="theme-badge" id="themeBadge" aria-hidden="true">
-    <span class="theme-icon" id="themeIcon">☀️</span>
-    <span class="theme-name" id="themeName">Light</span>
   </div>
 
   <header class="header" id="header">
@@ -110,9 +94,6 @@
             <button class="theme-option" data-theme="dark" data-cursor-hover>
               <span>🌙</span> Dark
             </button>
-            <button class="theme-option" data-theme="jurassic" data-cursor-hover>
-              <span>🦖</span> Jurassic
-            </button>
           </div>
         </div>
       </nav>
@@ -125,14 +106,6 @@
   <main>
     <!-- Hero -->
     <section class="hero" id="about">
-      <div class="hero-bg" aria-hidden="true">
-        <div class="fern fern-1">🌿</div>
-        <div class="fern fern-2">🌿</div>
-        <div class="fern fern-3">🍃</div>
-        <div class="amber amber-1"></div>
-        <div class="amber amber-2"></div>
-        <div class="amber amber-3"></div>
-      </div>
       <div class="container hero-grid">
         <div class="hero-content" data-reveal>
           <div class="hero-top-row">
@@ -163,15 +136,27 @@
           </div>
         </div>
 
-        <div class="hero-visual" aria-hidden="true" data-reveal>
-          <div class="orbit-scene" id="orbitScene">
-            <div class="orbit-ring ring-1"></div>
-            <div class="orbit-ring ring-2"></div>
-            <div class="orbit-ring ring-3"></div>
-            <div class="orbit-dot dot-1"></div>
-            <div class="orbit-dot dot-2"></div>
-            <div class="orbit-dot dot-3"></div>
-            <div class="orbit-center"><span>AD</span></div>
+        <div class="hero-visual" data-reveal>
+          <div class="code-snippet">
+            <div class="code-glow"></div>
+            <div class="code-header">
+              <div class="code-dot red"></div>
+              <div class="code-dot yellow"></div>
+              <div class="code-dot green"></div>
+              <span class="code-title">arief.js</span>
+            </div>
+            <div class="code-content">
+              <div><span class="keyword">const</span> developer = {</div>
+              <div>&nbsp;&nbsp;name: <span class="string">"Arief Danial"</span>,</div>
+              <div>&nbsp;&nbsp;role: <span class="string" id="codeRole">"Software Engineer Intern"</span>,</div>
+              <div>&nbsp;&nbsp;skills: [<span class="string">"Java"</span>, <span class="string">"Spring Boot"</span>, <span class="string">"React"</span>, <span class="string">"Next.js"</span>],</div>
+              <div>&nbsp;&nbsp;experience: <span class="number">2</span>,</div>
+              <div>&nbsp;&nbsp;openToWork: <span class="keyword">true</span></div>
+              <div>};</div>
+              <div>&nbsp;</div>
+              <div><span class="comment">// Let's build something amazing together</span></div>
+              <div><span class="function">connect</span>(developer);</div>
+            </div>
           </div>
         </div>
       </div>
